@@ -51,23 +51,21 @@ class MainActivity : AppCompatActivity() {
         )
         if (cursor != null) {
             val mobileNoSet = HashSet<String>()
-            try {
-                val nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+            cursor.use { mainCursor ->
+                val nameIndex = mainCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
                 val numberIndex =
-                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                    mainCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 var name: String
                 var number: String
-                while (cursor.moveToNext()) {
-                    name = cursor.getString(nameIndex)
-                    number = cursor.getString(numberIndex)
+                while (mainCursor.moveToNext()) {
+                    name = mainCursor.getString(nameIndex)
+                    number = mainCursor.getString(numberIndex)
                     number = number.replace(" ", "")
                     if (!mobileNoSet.contains(number)) {
                         contactList.add(Contact(name, number, LocalDateTime.now()))
                         mobileNoSet.add(number)
                     }
                 }
-            } finally {
-                cursor.close()
             }
         }
     }
