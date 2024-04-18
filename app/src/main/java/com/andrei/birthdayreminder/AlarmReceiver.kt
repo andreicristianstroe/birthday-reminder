@@ -15,11 +15,12 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         val action = intent?.getParcelableExtra<Contact>("contact")
-        val intent = Intent(context, MainActivity::class.java)
+
+        val mainIntent = Intent(context, MainActivity::class.java)
         val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(context, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
         if (action?.birthDay != null) {
-            Log.d("androidios", "onReceive: nu e null")
+            Log.d("androidios", "onReceive: Not null")
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val channel =
@@ -27,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
 
             val notification = NotificationCompat.Builder(context, "channel")
-                .setContentTitle("It's xxxx birthday!")
+                .setContentTitle("It's ${action.name}'s birthday!")
                 .setContentText("Wish them happy birthday!")
                 .setSmallIcon(androidx.core.R.drawable.notification_bg)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

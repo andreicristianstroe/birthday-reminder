@@ -2,12 +2,10 @@ package com.andrei.birthdayreminder
 
 import android.app.AlarmManager
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.widget.ListView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDateTime
 
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         ContactsContract.CommonDataKinds.Phone.NUMBER
     )
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = adapter
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     private fun hasScheduleExactAlarm(): Boolean {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         return alarmManager.canScheduleExactAlarms()
