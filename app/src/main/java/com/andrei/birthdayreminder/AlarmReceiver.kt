@@ -34,7 +34,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .addAction(R.drawable.ic_launcher_foreground, "Send Message", pendingIntent)
 
-            sendSMS(context, action.phoneNumber, "Happy Birthday!")
+            sendSMS(context, action.phoneNumber, "Happy Birthday, ${action.name}!")
 
             notificationManager.notify(1, notification.build())
         }
