@@ -1,17 +1,16 @@
 package com.andrei.birthdayreminder
 
-import android.app.AlarmManager
-import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.provider.Settings
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.andrei.birthdayreminder.MonthsOfYear.listOfMonths
 import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
     private var contactList: ArrayList<Contact> = ArrayList()
     private lateinit var listView: ListView
+    private lateinit var adapter: ContactsAdapter
 
     private val projection = arrayOf(
         ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
@@ -22,24 +21,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (!hasScheduleExactAlarm()) {
-            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-            startActivity(intent)
-        }
         listView = findViewById(R.id.listView)
-        val adapter = ContactsAdapter(this, contactList)
         val scheduler = BirthdayAlarm(this)
         getContactList()
         contactList.setContactBirthdayByMonth()
         scheduler.schedule(Contact("Andrei-Cristian Stroe", "5556", LocalDateTime.now()))
+        adapter = ContactsAdapter(this, null, listOfMonths())
+        adapter.contactList = 1
         listView.adapter = adapter
+        listView.setOnItemClickListener { _, _, _, _ ->
+            if(adapter.contactList == 1) {
+                adapter = ContactsAdapter(this, contactList, null)
+                adapter.contactList = 0
+                listView.adapter =  adapter
+            }
+        }
     }
 
-    private fun hasScheduleExactAlarm(): Boolean {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        return alarmManager.canScheduleExactAlarms()
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(adapter.contactList == 0) {
+            adapter = ContactsAdapter(this, null,  listOfMonths())
+            adapter.contactList = 1
+            listView.adapter = adapter
+        } else {
+            finish()
+        }
     }
-
     private fun getContactList() {
         val cr = contentResolver
         val cursor = cr.query(
