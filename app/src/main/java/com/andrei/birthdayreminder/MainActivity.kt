@@ -30,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         adapter.contactList = 1
         listView.adapter = adapter
         listView.setOnItemClickListener { _, _, _, _ ->
-            if(adapter.contactList == 1) {
+            if (adapter.contactList == 1) {
                 adapter = ContactsAdapter(this, contactList, null)
                 adapter.contactList = 0
-                listView.adapter =  adapter
+                listView.adapter = adapter
             }
         }
     }
@@ -41,14 +41,15 @@ class MainActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
-        if(adapter.contactList == 0) {
-            adapter = ContactsAdapter(this, null,  listOfMonths())
+        if (adapter.contactList == 0) {
+            adapter = ContactsAdapter(this, null, listOfMonths())
             adapter.contactList = 1
             listView.adapter = adapter
         } else {
             finish()
         }
     }
+
     private fun getContactList() {
         val cr = contentResolver
         val cursor = cr.query(

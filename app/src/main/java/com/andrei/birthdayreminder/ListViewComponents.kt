@@ -1,7 +1,7 @@
 package com.andrei.birthdayreminder
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class ListViewComponents : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

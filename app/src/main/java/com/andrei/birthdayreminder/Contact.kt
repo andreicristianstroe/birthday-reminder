@@ -9,4 +9,4 @@ data class Contact(
     var name: String,
     var phoneNumber: String,
     var birthDay: LocalDateTime
-): Parcelable
+) : Parcelable

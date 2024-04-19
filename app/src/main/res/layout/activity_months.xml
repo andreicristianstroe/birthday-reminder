@@ -8,6 +8,6 @@
         android:id="@+id/months"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25.sp"/>
+        android:textSize="25.sp" />
 
 </LinearLayout>
