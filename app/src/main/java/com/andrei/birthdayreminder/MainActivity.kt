@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.andrei.birthdayreminder.MonthsOfYear.listOfMonths
 import java.time.LocalDateTime
 import java.time.format.DateTimeParseException
+import java.time.temporal.ChronoUnit
 
 class MainActivity : AppCompatActivity() {
     private var contactList: ArrayList<Contact> = ArrayList()
@@ -20,7 +21,17 @@ class MainActivity : AppCompatActivity() {
         listView = findViewById(R.id.listView)
         val scheduler = BirthdayAlarm(this)
         getContactList()
-        scheduler.schedule(Contact("Stroe", "0741091778", LocalDateTime.now()))
+        contactList.sortBy {
+            it.birthDay?.until(LocalDateTime.now(), ChronoUnit.DAYS)
+        }
+        val firstCelebration = contactList.first { it.birthDay != null }
+        scheduler.schedule(
+            (Contact(
+                firstCelebration.name,
+                firstCelebration.phoneNumber,
+                firstCelebration.birthDay
+            ))
+        )
         adapter = ContactsAdapter(this, null, listOfMonths())
         adapter.contactList = 1
         listView.adapter = adapter
