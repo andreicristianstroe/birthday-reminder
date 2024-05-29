@@ -12,7 +12,8 @@ class ContactsAdapter(
     private val context: Context,
     private val data: List<Contact>?,
     private val data2: List<String>?
-) : BaseAdapter() {
+) :
+    BaseAdapter() {
     var contactList = 0
     private var name: TextView? = null
     private var phoneNumber: TextView? = null
@@ -67,4 +68,5 @@ class ContactsAdapter(
     private fun bindMonths(months: String) {
         this.months?.text = months
     }
+
 }

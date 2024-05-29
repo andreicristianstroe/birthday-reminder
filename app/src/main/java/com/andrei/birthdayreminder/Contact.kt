@@ -8,5 +8,5 @@ import java.time.LocalDateTime
 data class Contact(
     var name: String,
     var phoneNumber: String,
-    var birthDay: LocalDateTime
+    var birthDay: LocalDateTime?
 ) : Parcelable
